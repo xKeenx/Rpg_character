@@ -77,7 +77,7 @@ function CharacterSkills(params:{strength:number, agility:number, intelligence:n
                 Стелс : {invisibility}
                 Уровень : {levelName(invisibility)}
                 <AddBoxIcon onClick={() => levelInvisibilityPlus(params.agility,invisibility)}/>
-                <IndeterminateCheckBoxIcon onClick={() => attack === 0 ? attack : setInvisibility(invisibility - 1)}/>
+                <IndeterminateCheckBoxIcon onClick={() => invisibility === 0 ? invisibility : setInvisibility(invisibility - 1)}/>
             </div>
             <div>
                 Стрельба из лука : {bowShot}

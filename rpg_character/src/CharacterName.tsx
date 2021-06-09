@@ -1,24 +1,31 @@
-import React, {useState} from 'react';
-import {ButtonGroup, Input, Button} from '@material-ui/core';
-
+import React, { useState } from 'react'
+import { ButtonGroup, Input, Button } from '@material-ui/core'
 
 function CharacterName() {
-    const [name, setName] = useState<string>("")
-
-
-    return (
-        <div>
+  const [name, setName] = useState<string>('')
+  const [showChangeButton, setShowChangeButton] = useState<boolean>(true)
+  return (
+    <div>
+      <div>
+        {showChangeButton ? (
+          <>
             <div>Введите имя персонажа</div>
-            <div>
-                <div>{name}</div>
-                <Input value={name}
-                       onChange={event => setName(event.target.value)}/>
-                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button>Изменить</Button>
-                </ButtonGroup>
-            </div>
-        </div>
-    );
+            <Input value={name} onChange={(event) => setName(event.target.value)} />
+            <Button variant='contained' color='primary' onClick={() => setShowChangeButton(false)}>
+              Сохранить имя
+            </Button>
+          </>
+        ) : (
+          <>
+            <div>{name}</div>
+            <Button variant='contained' color='primary' onClick={() => setShowChangeButton(true)}>
+              Изменить имя
+            </Button>
+          </>
+        )}
+      </div>
+    </div>
+  )
 }
 
-export default CharacterName;
+export default CharacterName

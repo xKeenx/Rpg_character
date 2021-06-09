@@ -1,0 +1,23 @@
+.wrapperDiv{
+  display: grid;
+    .characterNameBlock{
+      display: flex;
+      justify-content: center;
+      .columnDisplay{
+        display: flex;
+        flex-direction: column;
+        gap:15px;
+        .centerName{
+        display: flex;
+        justify-content: center;
+      }
+      }
+      .changeButtonDisplay{
+        display: flex;
+        flex-direction: column;
+        font-size: 30px;
+      }
+
+
+    }
+}

@@ -68,11 +68,11 @@ function CharacterParams() {
           </div>
           <div> Уклонение : {10 + agility}</div>
           <div>Энергичность : {agility + intelligence}</div>
+
+          <CharacterSkills strength={strength} agility={agility} intelligence={intelligence} charisma={charisma} />
           <Button variant='contained' color='primary' onClick={() => setShowChangeButton(true)}>
             Сохранить параметры
           </Button>
-
-          <CharacterSkills strength={strength} agility={agility} intelligence={intelligence} charisma={charisma} />
         </>
       )}
     </div>

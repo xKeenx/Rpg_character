@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import {Button} from "@material-ui/core";
+import CharacterSkills from "./CharacterSkills";
 
 function CharacterParams() {
-    const [strength, setStrength] = useState<number>(0)
+   const [strength, setStrength] = useState<number>(0)
     const [agility, setAgility] = useState<number>(0)
     const [intelligence, setIntelligence] = useState<number>(0)
     const [charisma, setCharisma] = useState<number>(0)
@@ -48,6 +49,7 @@ function CharacterParams() {
             <div> Уклонение : {10 + agility}</div>
             <div>Энергичность : {agility + intelligence}</div>
 
+            <CharacterSkills strength={strength} agility = {agility} intelligence = {intelligence} charisma = {charisma} />
         </div>
     );
 }

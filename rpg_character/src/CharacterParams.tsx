@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox'
 import { Button } from '@material-ui/core'
@@ -6,12 +6,20 @@ import CharacterSkills from './CharacterSkills'
 import characterParamsStyle from './characterParamsStyle.module.scss'
 
 function CharacterParams() {
-  const [strength, setStrength] = useState<number>(0)
-  const [agility, setAgility] = useState<number>(0)
-  const [intelligence, setIntelligence] = useState<number>(0)
-  const [charisma, setCharisma] = useState<number>(0)
-  const [life, setLife] = useState<number>(3)
   const [showChangeButton, setShowChangeButton] = useState<boolean>(false)
+
+  const [parameters, setParameters] = useState({
+    strength: 0,
+    agility: 0,
+    intelligence: 0,
+    charisma: 0,
+    life: 3,
+  })
+
+  useEffect(() => {
+    const LocalData = localStorage.getItem('stats')
+    setParameters(LocalData ? JSON.parse(LocalData) : parameters)
+  }, [])
 
   return (
     <div className={characterParamsStyle.wrapperDiv}>
@@ -23,69 +31,100 @@ function CharacterParams() {
       ) : (
         <>
           <div className={characterParamsStyle.paramsNameAndDistribution}>
-            <div> Сила : {strength} </div>
+            <div> Сила : {parameters.strength} </div>
             <div>
               <AddBoxIcon
                 onClick={() => {
-                  setStrength(strength + 1)
-                  setLife(life + 1)
+                  setParameters({ ...parameters, strength: parameters.strength + 1, life: parameters.life + 1 })
                 }}
               />
               <IndeterminateCheckBoxIcon
                 onClick={() => {
-                  if (strength > 0) {
-                    setStrength(strength - 1)
-                    if (life > 0) setLife(life - 1)
+                  if (parameters.strength > 0) {
+                    setParameters({
+                      ...parameters,
+                      strength: parameters.strength - 1,
+                      life: parameters.life > 0 ? parameters.life - 1 : parameters.life,
+                    })
                   }
                 }}
               />
             </div>
           </div>
           <div className={characterParamsStyle.paramsNameAndDistribution}>
-            <div> Ловкость : {agility} </div>
+            <div> Ловкость : {parameters.agility} </div>
             <div>
-              <AddBoxIcon onClick={() => setAgility(agility + 1)} />
-              <IndeterminateCheckBoxIcon onClick={() => (agility === 0 ? agility : setAgility(agility - 1))} />
-            </div>
-          </div>
-          <div className={characterParamsStyle.paramsNameAndDistribution}>
-            <div> Интелект : {intelligence} </div>
-            <div>
-              <AddBoxIcon onClick={() => setIntelligence(intelligence + 1)} />
+              <AddBoxIcon onClick={() => setParameters({ ...parameters, agility: parameters.agility + 1 })} />
               <IndeterminateCheckBoxIcon
-                onClick={() => (intelligence === 0 ? intelligence : setIntelligence(intelligence - 1))}
+                onClick={() =>
+                  parameters.agility === 0
+                    ? parameters.agility
+                    : setParameters({ ...parameters, agility: parameters.agility - 1 })
+                }
               />
             </div>
           </div>
           <div className={characterParamsStyle.paramsNameAndDistribution}>
-            <div>Харизма : {charisma} </div>
+            <div> Интелект : {parameters.intelligence} </div>
             <div>
-              <AddBoxIcon onClick={() => setCharisma(charisma + 1)} />
-              <IndeterminateCheckBoxIcon onClick={() => (charisma === 0 ? charisma : setCharisma(charisma - 1))} />
+              <AddBoxIcon onClick={() => setParameters({ ...parameters, intelligence: parameters.intelligence + 1 })} />
+              <IndeterminateCheckBoxIcon
+                onClick={() =>
+                  parameters.intelligence === 0
+                    ? parameters.intelligence
+                    : setParameters({ ...parameters, intelligence: parameters.intelligence - 1 })
+                }
+              />
+            </div>
+          </div>
+          <div className={characterParamsStyle.paramsNameAndDistribution}>
+            <div>Харизма : {parameters.charisma} </div>
+            <div>
+              <AddBoxIcon onClick={() => setParameters({ ...parameters, charisma: parameters.charisma + 1 })} />
+              <IndeterminateCheckBoxIcon
+                onClick={() =>
+                  parameters.charisma === 0
+                    ? parameters.charisma
+                    : setParameters({ ...parameters, charisma: parameters.charisma - 1 })
+                }
+              />
             </div>
           </div>
           <div className={characterParamsStyle.paramsNameAndDistribution}>
             <div>
-              {' '}
-              Жизненная сила: {life} / {3 + strength}{' '}
+              Жизненная сила: {parameters.life} / {3 + parameters.strength}
             </div>
             <Button
               className={characterParamsStyle.damageButton}
               variant='contained'
               color='secondary'
               size='small'
-              onClick={() => (life === 0 ? life : setLife(life - 1))}
+              onClick={() =>
+                parameters.life === 0 ? parameters.life : setParameters({ ...parameters, life: parameters.life - 1 })
+              }
             >
               Урон
             </Button>
           </div>
-          <div className={characterParamsStyle.paramsNameAndDistribution}> Уклонение : {10 + agility}</div>
-          <div className={characterParamsStyle.paramsNameAndDistribution}>Энергичность : {agility + intelligence}</div>
+          <div className={characterParamsStyle.paramsNameAndDistribution}> Уклонение : {10 + parameters.agility}</div>
+          <div className={characterParamsStyle.paramsNameAndDistribution}>
+            Энергичность : {parameters.agility + parameters.intelligence}
+          </div>
 
-          <CharacterSkills strength={strength} agility={agility} intelligence={intelligence} charisma={charisma} />
-          <Button variant='contained' color='primary' onClick={() => setShowChangeButton(true)}>
-            Сохранить параметры
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => localStorage.setItem('stats', JSON.stringify(parameters))}
+          >
+            Сохранить раскачку характеристик
           </Button>
+
+          <CharacterSkills
+            strength={parameters.strength}
+            agility={parameters.agility}
+            intelligence={parameters.intelligence}
+            charisma={parameters.charisma}
+          />
         </>
       )}
     </div>

@@ -1,0 +1,11 @@
+.wrapperDiv{
+  display: grid;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+      .paramsNameAndDistribution{
+        display: flex;
+        justify-content: space-between;
+
+      }
+}

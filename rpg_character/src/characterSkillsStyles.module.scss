@@ -1,0 +1,13 @@
+.wrapperDiv{
+  display: grid;
+  gap:15px;
+  margin-top: 30px;
+
+      .iconDiv{
+        display: flex;
+        .levelMargin{
+          margin-left: 50px;
+        }
+      }
+
+}
